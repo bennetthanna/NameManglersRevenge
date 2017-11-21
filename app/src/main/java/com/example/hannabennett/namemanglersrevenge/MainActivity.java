@@ -22,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
         mMangleNicelyButton = (Button) findViewById(R.id.mangle_nicely_button);
         mMangleRudelyButton = (Button) findViewById(R.id.mangle_rudely_button);
 
+        final String emptyNameText = getResources().getString(R.string.empty_edit_text_toast);
+
         mMangleRudelyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String inputName = mFirstNameEditText.getText().toString();
                 if(inputName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "enter name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), emptyNameText, Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = MangledNameActivity.newIntent(getApplicationContext(), inputName, "rudely");
                     startActivity(intent);
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String inputName = mFirstNameEditText.getText().toString();
                 if(inputName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "enter name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), emptyNameText, Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = MangledNameActivity.newIntent(getApplicationContext(), inputName, "nicely");
                     startActivity(intent);

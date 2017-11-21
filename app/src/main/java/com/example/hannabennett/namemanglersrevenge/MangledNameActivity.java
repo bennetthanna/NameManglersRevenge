@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by HannaBennett on 11/21/17.
@@ -14,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 public class MangledNameActivity extends AppCompatActivity {
     public static final String EXTRA_INPUT_NAME = "com.example.hannabennett.namemanglersrevenge.input_name";
     public static final String EXTRA_FRIENDLINESS = "com.example.hannabennett.namemanglersrevenge.friendliness";
+
+    public static final String TAG = "test";
 
     public static Intent newIntent(Context packageContext, String inputName, String friendliness) {
         Intent intent = new Intent(packageContext, MangledNameActivity.class);
@@ -25,7 +30,7 @@ public class MangledNameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(R.layout.activity_mangled_name);
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
@@ -38,5 +43,14 @@ public class MangledNameActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        if (getIntent().getSerializableExtra(EXTRA_FRIENDLINESS).equals("rudely")) {
+            ImageView niceHeaderImage = (ImageView) findViewById(R.id.header_nice_image);
+            niceHeaderImage.setVisibility(View.GONE);
+        } else {
+            ImageView rudeFooterImage = (ImageView) findViewById(R.id.footer_rude_image);
+            rudeFooterImage.setVisibility(View.GONE);
+        }
+
     }
 }
