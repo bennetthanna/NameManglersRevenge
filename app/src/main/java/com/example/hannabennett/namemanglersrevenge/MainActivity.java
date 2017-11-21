@@ -1,8 +1,6 @@
 package com.example.hannabennett.namemanglersrevenge;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,5 +34,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mMangleNicelyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String inputName = mFirstNameEditText.getText().toString();
+                if(inputName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "enter name", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = MangledNameActivity.newIntent(getApplicationContext(), inputName, "nicely");
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetEditText();
+    }
+
+    private void resetEditText() {
+        EditText nameInput = (EditText) findViewById(R.id.name_input);
+        nameInput.setText("");
     }
 }
