@@ -18,12 +18,15 @@ import java.util.Random;
 public class MangledNameFragment extends Fragment {
     private static final String ARG_INPUT_NAME = "input_name";
     private static final String ARG_FRIENDLINESS = "friendliness";
+    private static final String KEY_LAST_NAME = "last_name";
+    private static final String TAG = "MangledNameFragment";
 
     private String mInputName;
     private String mFriendliness;
     private TextView mMangledNameText;
     private Button mResetButton;
     private Button mRemangleButton;
+    private String mRandomLastName;
 
     public static MangledNameFragment newInstance(String inputName, String friendliness) {
         Bundle args = new Bundle();
@@ -50,7 +53,13 @@ public class MangledNameFragment extends Fragment {
         mResetButton = (Button) v.findViewById(R.id.reset_button);
         mRemangleButton = (Button) v.findViewById(R.id.remangle_button);
 
-        mMangledNameText.setText(getMangledName(mInputName, getRandomWord()));
+        if (savedInstanceState != null) {
+            mRandomLastName = savedInstanceState.getString(KEY_LAST_NAME);
+            mMangledNameText.setText(getMangledName(mInputName, mRandomLastName));
+        } else {
+            mRandomLastName = getRandomWord();
+            mMangledNameText.setText(getMangledName(mInputName, mRandomLastName));
+        }
 
         mResetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,6 +90,13 @@ public class MangledNameFragment extends Fragment {
             randomWords = res.getStringArray(R.array.random_rude_word_array);
         }
         int randomIndex = new Random().nextInt(randomWords.length);
-        return randomWords[randomIndex];
+        mRandomLastName = randomWords[randomIndex];
+        return mRandomLastName;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_LAST_NAME, mRandomLastName);
     }
 }
