@@ -1,5 +1,6 @@
 package com.example.hannabennett.namemanglersrevenge;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,17 +29,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String inputName = mFirstNameEditText.getText().toString();
                 if(inputName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "enter name", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "enter name", Toast.LENGTH_SHORT).show();
                 } else {
-                    FragmentManager fm = getSupportFragmentManager();
-                    Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-
-                    if(fragment == null) {
-                        fragment = MangledNameFragment.newInstance(inputName, "rudely");
-                        fm.beginTransaction()
-                                .add(R.id.fragment_container, fragment)
-                                .commit();
-                    }
+                    Intent intent = MangledNameActivity.newIntent(getApplicationContext(), inputName, "rudely");
+                    startActivity(intent);
                 }
             }
         });
