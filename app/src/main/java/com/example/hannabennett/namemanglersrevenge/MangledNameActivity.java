@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -17,8 +16,6 @@ import android.widget.ImageView;
 public class MangledNameActivity extends AppCompatActivity {
     public static final String EXTRA_INPUT_NAME = "com.example.hannabennett.namemanglersrevenge.input_name";
     public static final String EXTRA_FRIENDLINESS = "com.example.hannabennett.namemanglersrevenge.friendliness";
-
-    public static final String TAG = "test";
 
     public static Intent newIntent(Context packageContext, String inputName, String friendliness) {
         Intent intent = new Intent(packageContext, MangledNameActivity.class);
