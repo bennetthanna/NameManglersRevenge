@@ -1,6 +1,7 @@
 package com.example.hannabennett.namemanglersrevenge;
 
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.hannabennett.namemanglersrevenge.databinding.FragmentMangledNameBinding;
 
 import java.util.Random;
 
@@ -47,33 +50,36 @@ public class MangledNameFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_mangled_name, container, false);
-
-        mMangledNameText = (TextView) v.findViewById(R.id.mangled_name);
-        mResetButton = (Button) v.findViewById(R.id.reset_button);
-        mRemangleButton = (Button) v.findViewById(R.id.remangle_button);
-
+        FragmentMangledNameBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_mangled_name, container, false);
+//        View v = inflater.inflate(R.layout.fragment_mangled_name, container, false);
+//
+//        mMangledNameText = (TextView) v.findViewById(R.id.mangled_name);
+//        mResetButton = (Button) v.findViewById(R.id.reset_button);
+//        mRemangleButton = (Button) v.findViewById(R.id.remangle_button);
+//
         if (savedInstanceState != null) {
             mRandomLastName = savedInstanceState.getString(KEY_LAST_NAME);
-            mMangledNameText.setText(getMangledName(mInputName, mRandomLastName));
         } else {
             mRandomLastName = getRandomWord();
-            mMangledNameText.setText(getMangledName(mInputName, mRandomLastName));
         }
-
-        mResetButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-
-        mRemangleButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mMangledNameText.setText(getMangledName(mInputName, getRandomWord()));
-            }
-        });
-
-        return v;
+        MangledName mangledName = new MangledName(mInputName, mRandomLastName);
+        binding.setViewModel(new MangledNameViewModel(mangledName));
+        binding.executePendingBindings();
+        return binding.getRoot();
+//
+//        mResetButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                getActivity().finish();
+//            }
+//        });
+//
+//        mRemangleButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                mMangledNameText.setText(getMangledName(mInputName, getRandomWord()));
+//            }
+//        });
+//        return v;
     }
 
     private String getMangledName(String firstName, String lastName) {
